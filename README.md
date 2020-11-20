@@ -5,14 +5,21 @@ Our source codes are mainly based on [Detectron2](https://github.com/facebookres
 ## Get Started
 About the initialization of [Detectron2](https://github.com/facebookresearch/detectron2), please refer to [Detectron2.Getting_started](https://github.com/facebookresearch/detectron2/blob/master/GETTING_STARTED.md
 ).
+### dataset transformation
+To train the VisDrone and UAVDT dataset, you need transform them to coco format.
+We provide './tools/txt2xml_\*.py' and './tools/xml2json_\*.py' to generate json files in coco format.
+### dataset augmentation
+The network in our paper is trained with the augmented datasets.
+We provide './tools/crop_dataset.py' and './tools/sr_dataset.py' to conduct SARSA and LSRN to the original datasets.
 ### pretrained models
 The pretrained models of our network can be downloaded at [Detectron2.model_zoo](https://github.com/facebookresearch/detectron2/blob/master/MODEL_ZOO.md).
 You can directly download [R-50.pkl](https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/MSRA/R-50.pkl) or [R-101.pkl](https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/MSRA/R-101.pkl)
 to '.torch/fvcore_cache/detectron2/ImageNetPretrained/MSRA/' of your 'home' directory.
 Or they will be downloaded automatically when training.
-### training
+### training and evaluation
 We provide "train_net.py" for network training.
-To train a model with "train_net.py", first setup the corresponding datasets following [Detectron2.datasets](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md), you need to put your dataset into './datasets' directory.
+To train a model with "train_net.py", first setup the corresponding datasets following [Detectron2.datasets](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md),
+you need to put the transformed or augmented datasets into './datasets' directory.
 The settings of VisDrone and UAVDT can be found in './glsan/data/datasets'.
 
 To train with 8 GPUs, run:
