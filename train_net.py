@@ -36,43 +36,21 @@ from detectron2.evaluation import (
     SemSegEvaluator,
     verify_results,
     print_csv_format,
+    COCOEvaluator,
+    inference_on_dataset
 )
 from detectron2.modeling import GeneralizedRCNNWithTTA
 
-from pso.engine import BaseTrainer
-from pso.config import get_cfg
-from pso.evaluation import COCOEvaluator, inference_on_dataset
-from pso.data.mappers import BorderMaskMapper
-from detectron2.data import (
-    build_detection_train_loader, build_detection_test_loader)
-from detectron2.data import DatasetMapper as D2Mapper
+from glsan.engine import BaseTrainer
+from glsan.config import get_cfg
+from glsan.data import *
+from glsan.modeling import *
+# from glsan.evaluation import inference_on_dataset
 
 class Trainer(BaseTrainer):
     """
     We use the "BaseTrainer" which contains pre-defined default logic for standard training workflow
     """
-
-    @classmethod
-    def build_train_loader(cls, cfg):
-        """
-        Returns:
-            iterable
-
-        It now calls :func:`pso.data.build_detection_train_loader`.
-        Overwrite it if you'd like a different data loader.
-        """
-        return build_detection_train_loader(cfg, mapper=BorderMaskMapper(cfg,is_train=True))
-
-    @classmethod
-    def build_test_loader(cls, cfg, dataset_name):
-        """
-        Returns:
-            iterable
-
-        It now calls :func:`pso.data.build_detection_test_loader`.
-        Overwrite it if you'd like a different data loader.
-        """
-        return build_detection_test_loader(cfg, dataset_name, mapper=BorderMaskMapper(cfg,is_train=False))
 
     @classmethod
     def build_evaluator(cls, cfg, dataset_name, output_folder=None):
@@ -162,7 +140,7 @@ class Trainer(BaseTrainer):
                     )
                     results[dataset_name] = {}
                     continue
-            results_i = inference_on_dataset(dataset_name, model, data_loader, evaluator)
+            results_i = inference_on_dataset(model, data_loader, evaluator)
             results[dataset_name] = results_i
             if comm.is_main_process():
                 assert isinstance(
@@ -176,7 +154,6 @@ class Trainer(BaseTrainer):
         if len(results) == 1:
             results = list(results.values())[0]
         return results
-
 
     @classmethod
     def test_with_TTA(cls, cfg, model):

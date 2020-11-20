@@ -16,7 +16,7 @@ assert torch_ver >= [1, 4], "Requires PyTorch >= 1.4"
 
 
 def get_version():
-    init_py_path = path.join(path.abspath(path.dirname(__file__)), "pso", "__init__.py")
+    init_py_path = path.join(path.abspath(path.dirname(__file__)), "glsan", "__init__.py")
     init_py = open(init_py_path, "r").readlines()
     version_line = [l.strip() for l in init_py if l.startswith("__version__")][0]
     version = version_line.split("=")[-1].strip().strip("'\"")
@@ -40,7 +40,7 @@ def get_version():
 
 def get_extensions():
     this_dir = path.dirname(path.abspath(__file__))
-    extensions_dir = path.join(this_dir, "pso", "layers", "csrc")
+    extensions_dir = path.join(this_dir, "glsan", "layers", "csrc")
 
     main_source = path.join(extensions_dir, "vision.cpp")
     sources = glob.glob(path.join(extensions_dir, "**", "*.cpp"))
@@ -75,7 +75,7 @@ def get_extensions():
 
     ext_modules = [
         extension(
-            "pso._C",
+            "glsan._C",
             sources,
             include_dirs=include_dirs,
             define_macros=define_macros,
@@ -87,7 +87,7 @@ def get_extensions():
 
 
 setup(
-    name="pso",
+    name="glsan",
     version=get_version(),
     author="Boss Wan and his fans",
     description="Pixel-Segmentation-Object Detection",

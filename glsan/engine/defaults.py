@@ -7,7 +7,7 @@ import detectron2.utils.comm as comm
 from detectron2.engine import DefaultTrainer
 from detectron2.data import (
     build_detection_train_loader, build_detection_test_loader)
-from pso.modeling import build_model
+from glsan.modeling import build_model
 
 from . import hooks
 
@@ -18,11 +18,7 @@ class BaseTrainer(DefaultTrainer):
     """
     def __init__(self, cfg):
         super().__init__(cfg)
-        # if comm.get_world_size() > 1:
-        #     self.model = DistributedDataParallel(
-        #         self.model, device_ids=[comm.get_local_rank()], broadcast_buffers=False, find_unused_parameters=True,
-        #     )
-
+        
     def build_hooks(self):
         """
         Build a list of default hooks, including timing, evaluation,
