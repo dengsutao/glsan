@@ -7,7 +7,9 @@ About the initialization of [Detectron2](https://github.com/facebookresearch/det
 ).
 ### pretrained models
 The pretrained models of our network can be downloaded at [Detectron2.model_zoo](https://github.com/facebookresearch/detectron2/blob/master/MODEL_ZOO.md).
-You kan directly download [R-50.pkl](https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/MSRA/R-50.pkl) or [R-101.pkl](https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/MSRA/R-101.pkl).
+You can directly download [R-50.pkl](https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/MSRA/R-50.pkl) or [R-101.pkl](https://dl.fbaipublicfiles.com/detectron2/ImageNetPretrained/MSRA/R-101.pkl)
+to '.torch/fvcore_cache/detectron2/ImageNetPretrained/MSRA/' of your 'home' directory.
+Or they will be downloaded automatically when training.
 ### training
 We provide "train_net.py" for network training.
 To train a model with "train_net.py", first setup the corresponding datasets following [Detectron2.datasets](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md), you need to put your dataset into './datasets' directory.
